@@ -6,7 +6,7 @@ test('render Start', () => {
   const wrapper = shallow(
     <App title='mockTitle' />
   );
-  expect(wrapper.state().startButton).toEqual('xxx');
+  expect(wrapper.state().startButton).toEqual('Start');
   // wrapper.simulate('click');
   // expect(wrapper.state().startButton).toEqual('Next Challenge');
 });
