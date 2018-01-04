@@ -13,6 +13,12 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
+test:
+  post:
+    - >
+      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+        ./bin/run-functional-tests.sh ${FUNCTIONAL_TEST_TARGET};
+      fi
 
     working_directory: ~/repo
 
