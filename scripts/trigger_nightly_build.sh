@@ -10,7 +10,7 @@ post_data=$(cat <<EOF
 {
   "build_parameters": {
     "RUN_NIGHTLY_BUILD": "true",
-    # "FUNCTIONAL_TEST_TARGET": "staging-dawn-435.herokuapp.com"̵
+    # "FUNCTIONAL_TEST_TARGET": ""̵
   }
 }
 EOF)

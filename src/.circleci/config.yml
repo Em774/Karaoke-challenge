@@ -4,6 +4,14 @@
 #
 version: 2
 jobs:
+  test:
+    trigger_nightly_build.sh example-corp/project-foo master ${CIRCLE_TOKEN}
+  post:
+    - >
+      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
+        ./bin/run-functional-tests.sh ${FUNCTIONAL_TEST_TARGET};
+      fi
+
   build:
     docker:
       # specify the version you desire here
@@ -13,12 +21,6 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-test:
-  post:
-    - >
-      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
-        ./bin/run-functional-tests.sh ${FUNCTIONAL_TEST_TARGET};
-      fi
 
     working_directory: ~/repo
 
@@ -26,35 +28,18 @@ test:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "package.json" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-dependencies-
 
       - run: yarn install
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
       - run: yarn test
-
-workflows:
-  version: 2
-  commit:
-    jobs:
-      - test
-  nightly:
-    triggers: trigger_nightly_build.sh example-corp/project-foo master ${CIRCLE_TOKEN}
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-                - beta
-    jobs:
-      - coverage
