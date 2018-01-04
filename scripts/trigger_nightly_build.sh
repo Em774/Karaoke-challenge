@@ -4,7 +4,7 @@ _project=$1
 _branch=$2
 _circle_token=$3
 
-trigger_build_url=https://circleci.com/api/v1.1/project/github/${Karaoke-challenge}/tree/${_branch}?circle-token=${_circle_token}
+trigger_build_url=https://circleci.com/api/v1.1/project/github/${_project}/tree/${_branch}?circle-token=${_circle_token}
 
 post_data=$(cat <<EOF
 {

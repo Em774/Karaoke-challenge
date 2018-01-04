@@ -41,3 +41,20 @@ test:
 
       # run tests!
       - run: yarn test
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - test
+  nightly:
+    triggers: trigger_nightly_build.sh example-corp/project-foo master ${CIRCLE_TOKEN}
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+                - beta
+    jobs:
+      - coverage
