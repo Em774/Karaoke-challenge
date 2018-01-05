@@ -4,14 +4,6 @@
 #
 version: 2
 jobs:
-  test:
-    trigger_nightly_build.sh example-corp/project-foo master ${CIRCLE_TOKEN}
-  post:
-    - >
-      if [ -n "${RUN_NIGHTLY_BUILD}" ]; then
-        ./bin/run-functional-tests.sh ${FUNCTIONAL_TEST_TARGET};
-      fi
-
   build:
     docker:
       # specify the version you desire here
