@@ -1,6 +1,16 @@
 language: node_js
 node_js:
   - "7"
-script:
-  - yarn run test
-  - yarn run build
+env:
+  BUILDKITE_DOCKER: true
+
+steps:
+  - command: "yarn run test"
+    agents:
+      - "queue=elastic"
+
+  - wait
+
+  - command: "yarn run build"
+    agents:
+      - "queue=elastic"
