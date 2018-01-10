@@ -1,28 +1,14 @@
 language: node_js
 node_js:
   - "7"
-# env:
-#   BUILDKITE_DOCKER: false
-dependencies:
-  pre:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
+
 steps:
-  - command: yarn install && yarn run test
-    plugins:
-      docker#v1.0.0:
-        image: "node:7"
-        workdir: /app
-        agents:
-          - "queue=elastic"
-
-  - wait
-
-  # - command: "yarn run test"
-    # agents:
-    #   - "queue=elastic"
+  - command: "yarn run test"
+    agents:
+      - "queue=default"
 
   - wait
 
   - command: "yarn run build"
     agents:
-      - "queue=elastic"
+      - "queue=default"
