@@ -3,7 +3,9 @@ node_js:
   - "7"
 # env:
 #   BUILDKITE_DOCKER: false
-
+dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
 steps:
   - command: yarn install && yarn run test
     plugins:
