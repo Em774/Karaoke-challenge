@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "7"
 env:
-  BUILDKITE_DOCKER: true
+  BUILDKITE_DOCKER: false
 
 steps:
   - command: "yarn run test"
