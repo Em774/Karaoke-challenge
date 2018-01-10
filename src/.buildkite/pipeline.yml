@@ -10,9 +10,12 @@ dependencies:
     - ~/.yarn-cache
   override:
     - yarn install
-    
+
 steps:
-  - command: "yarn"
+  - command: "yarn install"
+  
+  - wait
+
   - command: "yarn run test"
     agents:
       - "queue=elastic"
