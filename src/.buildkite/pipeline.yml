@@ -3,8 +3,16 @@ node_js:
   - "7"
 # env:
 #   BUILDKITE_DOCKER: false
-
+dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+  cache_directories:
+    - ~/.yarn-cache
+  override:
+    - yarn install
+    
 steps:
+  - command: "yarn"
   - command: "yarn run test"
     agents:
       - "queue=elastic"
