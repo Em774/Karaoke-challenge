@@ -1,42 +1,26 @@
-# language: node_js
-# node_js:
-#   - "7"
-# # env:
-# #   BUILDKITE_DOCKER: false
-# dependencies:
-#   pre:
-#     - curl -o- -L https://yarnpkg.com/install.sh | bash
-#   cache_directories:
-#     - ~/.yarn-cache
-#   override:
-#     - yarn install
-#
-# steps:
-#   - command: "yarn install"
-#
-#   - wait
-#
-#   - command: "yarn run test"
-#     agents:
-#       - "queue=elastic"
-#
-#   - wait
-#
-#   - command: "yarn run build"
-#     agents:
-#       - "queue=elastic"
-machine:
-  pre:
-    - mkdir ~/.yarn-cache
-  node:
-    version: stable
-dependencies:
-  pre:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-  cache_directories:
-    - ~/.yarn-cache
-  override:
-    - yarn install
-test:
-  override:
-    - yarn test
+language: node_js
+node_js:
+  - "7"
+# env:
+#   BUILDKITE_DOCKER: false
+
+steps:
+  - command: yarn install && yarn run test
+    plugins:
+      docker#v1.0.0:
+        image: "node:7"
+        workdir: /app
+        agents:
+          - "queue=elastic"
+
+  - wait
+
+  # - command: "yarn run test"
+    # agents:
+    #   - "queue=elastic"
+
+  - wait
+
+  - command: "yarn run build"
+    agents:
+      - "queue=elastic"
