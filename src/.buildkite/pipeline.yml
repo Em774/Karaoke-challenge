@@ -1,9 +1,9 @@
-language: node_js
-node_js:
-  - "7"
+# language: node_js
+# node_js:
+#   - "7"
 
 steps:
-  - command: "yarn run test"
+  - command: "yarn install && yarn run test"
     agents:
       - "queue=default"
 
