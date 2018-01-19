@@ -1,6 +1,17 @@
-language: node_js
-node_js:
-  - "7"
-script:
-  - yarn run test
-  - yarn run build
+# language: node_js
+# node_js:
+#   - "7"
+
+steps:
+  - command: "yarn install && yarn run test"
+    agents:
+      - "queue=default"
+    env:
+      BUILDKITE_DOCKER=true
+      BUILDKITE_DOCKER_FILE=Dockerfile.ci
+
+  - wait
+
+  - command: "yarn run build"
+    agents:
+      - "queue=default"
